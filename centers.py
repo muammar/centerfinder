@@ -14,6 +14,8 @@ with open('input') as infile, open('coord','w') as outfile:
         elif copy:
             outfile.write(line)
 
+outfile.close()
+
 """
 Lists are created to be treated later.
 """
@@ -77,3 +79,7 @@ with open("cocsvout","rb") as source:
         wtr= csv.writer(result)
         for r in rdr:
             wtr.writerow( (r[3], r[4], r[5]) )
+
+# Import csv to matrix in numpy.
+from numpy import genfromtxt
+cocmatrix = genfromtxt('cocbarray', delimiter=',')
