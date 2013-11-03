@@ -17,19 +17,11 @@ with open('input') as infile, open('coord','w') as outfile:
 outfile.close()
 
 """
-Lists are created to be treated later.
+Now we create csv
 """
-import simplejson
-with open('coord') as inf, open('coordlst','w') as outfile:
-    for line in inf:
-        parts = line.split() # split line into parts
-        if len(parts) > 1:   # if at least 2 parts/columns
-            #print parts[3], parts[4], parts[5]
-            coordvec=[parts[3],parts[4],parts[5]]
-            #print coordvec
-            simplejson.dump(coordvec, outfile)
-            outfile.close
-
+with open('coord') as fr, open('coordv', 'w') as fw:
+    for line in fr:
+        fw.write(','.join(line.strip().split()) + '\n')
 
 """
 The same process is done now to take out the centers of charges from the MOLPRO
@@ -72,3 +64,4 @@ with open("cocsvout","rb") as source:
 # Import csv to matrix in numpy.
 from numpy import genfromtxt
 cocmatrix = genfromtxt('cocbarray', delimiter=',')
+
