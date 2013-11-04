@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """
-This python script intends to look for MO near to atoms based on the center of
-charges in order to perform later incremental calculations.
+This python script intends to look for localized MO near to atoms based on the
+center of charges in order to perform later incremental calculations as stated
+in H. Stoll, Chem. Phys. Lett., 1992, 19.
 
 __author__ = "Muammar El Khatib"
 __copyright__ = "Copyright 2013, Muammar El Khatib"
@@ -13,6 +14,13 @@ __email__ = "muammarelkhatib@gmail.com"
 __status__ = "Development"
 """
 import csv
+
+# The number of core orbitals is asked.
+
+print 'Please enter the number of core orbitals in your localization calculation:'
+CO=raw_input()
+print ('CORE ORBITALS: ' +CO)
+
 """
 In this part of the code, we take the coordinates of the molecule from the
 MOLPRO output file and then we dump its content in outfile.
@@ -93,7 +101,15 @@ with open('cocsvout','rb') as source:
             wtr.writerow( (r[3], r[4], r[5]) )
 
 
-# Import csv to matrix in numpy.
+# Import csv files to matrices in numpy.
+
 from numpy import genfromtxt
 cocmatrix = genfromtxt('cocbarray', delimiter=',')
 coordmatrix = genfromtxt('coordbarray', delimiter=',')
+
+"""
+In this part, files are cleaned. If you want to let them, then you can comment
+all this section.
+
+os.remove()
+"""
