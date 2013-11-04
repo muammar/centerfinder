@@ -1,5 +1,17 @@
 #!/usr/bin/env python
+"""
+This python script intends to look for MO near to atoms based on the center of
+charges in order to perform later incremental calculations.
 
+__author__ = "Muammar El Khatib"
+__copyright__ = "Copyright 2013, Muammar El Khatib"
+__credits__ = [""]
+__license__ = "GPL"
+__version__ = "3"
+__maintainer__ = "Muammar El Khatib"
+__email__ = "muammarelkhatib@gmail.com"
+__status__ = "Development"
+"""
 import csv
 """
 In this part of the code, we take the coordinates of the molecule from the
@@ -24,12 +36,14 @@ with open('coord') as fr, open('coordv', 'w') as fw:
     for line in fr:
         fw.write(','.join(line.strip().split()) + '\n')
 
+# Unneeded columns are deleted from the csv
 input = open('coordv', 'rb')
 output = open('coordvout', 'wb')
 writer = csv.writer(output)
 for row in csv.reader(input):
     if row:
         writer.writerow(row)
+
 input.close()
 output.close()
 
@@ -67,6 +81,7 @@ writer = csv.writer(output)
 for row in csv.reader(input):
     if row:
         writer.writerow(row)
+
 input.close()
 output.close()
 
