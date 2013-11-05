@@ -18,8 +18,8 @@ import csv
 # The number of core orbitals is asked.
 
 print 'Please enter the number of core orbitals in your localization calculation:'
-CO=raw_input()
-print ('CORE ORBITALS: ' +CO)
+co=raw_input()
+print ('CORE ORBITALS: ' +co)
 
 """
 In this part of the code, we take the coordinates of the molecule from the
@@ -94,17 +94,28 @@ input.close()
 output.close()
 
 with open('cocsvout','rb') as source:
-    rdr= csv.reader( source )
+    rdr= csv.reader(source)
     with open('cocbarray','wb') as result:
         wtr= csv.writer(result)
         for r in rdr:
             wtr.writerow( (r[3], r[4], r[5]) )
 
+# Now we strip the CORE ORBITALS from the center of charges
+def skip_first(seq, n):
+    for i,item in enumerate(seq):
+        if i >= n:
+            yield item
+
+with open('cocbarray', 'rb') as total:
+    csvreader = csv.reader(total)
+    with open('cocbarrayr','wb') as result:
+        wtr= csv.writer(result)
+        for row in skip_first(csvreader, int(co)):
+            wtr.writerow(row)
 
 # Import csv files to matrices in numpy.
-
 from numpy import genfromtxt
-cocmatrix = genfromtxt('cocbarray', delimiter=',')
+cocmatrix = genfromtxt('cocbarrayr', delimiter=',')
 coordmatrix = genfromtxt('coordbarray', delimiter=',')
 
 """
