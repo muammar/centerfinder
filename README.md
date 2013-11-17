@@ -18,8 +18,10 @@ distribution or Mac OS X.
 $ git clone https://github.com/muammar/centerfinder.git
 $ cd centerfinder
 $ python centers.py
-
 ```
+
+The program will also ask you how many *core* molecular orbitals you have used
+in your MOLPRO input file.
 
 ## Feedback?
 
