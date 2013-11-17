@@ -24,6 +24,6 @@ $ python centers.py
 ## Feedback?
 
 This is my first program, if it can be called like that, written in python. So,
-I'm sure there is not optimal at all. However, you can send to me
+I'm sure it is not optimal at all. However, you can send to me
 [suggestions, and improvements](https://github.com/muammar/centerfinder/issues).
 They are very welcome.
