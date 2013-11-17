@@ -119,6 +119,14 @@ cocmatrix = genfromtxt('cocbarrayr', delimiter=',')
 coordmatrix = genfromtxt('coordbarray', delimiter=',')
 
 """
+Now, the distances between the two points in the 3D arrays are calculated using
+scipy and cdists.
+"""
+import scipy.spatial as sp
+distances=sp.distance.cdist(coordmatrix,cocmatrix, 'euclidean')
+
+print distances
+"""
 In this part, files are cleaned. If you want to let them, then you can comment
 all this section.
 
