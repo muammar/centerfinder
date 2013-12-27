@@ -150,7 +150,9 @@ print ('')
 print dcoordcoc
 
 lmonat=np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0))
-print (lmonat)
+adlmonat=[(int(co)+1),1]
+sumlmonat=lmonat+adlmonat
+print (sumlmonat)
 """
 In this part, files are cleaned. If you want to let them, then you can comment
 all this section.
