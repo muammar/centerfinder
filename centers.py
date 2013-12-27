@@ -142,7 +142,8 @@ print distances
 Primera respuesta de stackoverflow
 """
 print ('Primera')
-print (np.argwhere((distances > 2.3) & (distances < 2.7)))
+atnearat=np.argwhere((distances > 2.3) & (distances < 2.7))
+print (atnearat)
 #print (np.argwhere((distances > 2.55) & (distances < 2.87)))
 
 """
@@ -184,7 +185,8 @@ print ('Distances between atoms and center of charges')
 print ('')
 print dcoordcoc
 
-print (np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0)))
+lmonat=np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0))
+print (lmonat)
 """
 In this part, files are cleaned. If you want to let them, then you can comment
 all this section.
