@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 This python script intends to look for localized MO near to atoms based on the
 center of charges in order to perform later incremental calculations as stated
@@ -118,14 +119,72 @@ from numpy import genfromtxt
 cocmatrix = genfromtxt('cocbarrayr', delimiter=',')
 coordmatrix = genfromtxt('coordbarray', delimiter=',')
 
+print ('')
+print ('Coordinate array')
+print ('')
+print(coordmatrix)
+
+
 """
-Now, the distances between the two points in the 3D arrays are calculated using
+Now, the distances between two points in the 3D arrays are calculated using
 scipy and cdists.
 """
 import scipy.spatial as sp
-distances=sp.distance.cdist(coordmatrix,cocmatrix, 'euclidean')
+import numpy as np
+distances=sp.distance.cdist(coordmatrix,coordmatrix, 'euclidean')
 
+print ('')
+print ('Distances between atoms')
+print ('')
 print distances
+
+"""
+Primera respuesta de stackoverflow
+"""
+print ('Primera')
+print (np.argwhere((distances > 2.3) & (distances < 2.7)))
+#print (np.argwhere((distances > 2.55) & (distances < 2.87)))
+
+"""
+Segunda respuesta de stackoverflow.
+
+print ('Segunda')
+
+i, j = np.where(((distances > 2.3) & (distances < 2.7)))
+from itertools import groupby
+for k,g in groupby(zip(i, j), lambda x: x[0]):
+        print k, [tmp[1] for tmp in zip(*g)]
+
+"""
+"""
+
+# Esto es capaz de decirme dónde está el valor mínimo en cada parte del array
+print ('')
+print(distances.argmin(0)) #Columnas
+print(distances.argmin(1)) #Filas
+print ('')
+
+"""
+"""
+for i in distances:
+    print(i[i>2.6].min())
+
+# Esto puede ser usado para saber cuales son los índices
+print(distances[distances>0].min())
+for i, x in enumerate(distances):
+    for j, y in enumerate(distances):
+       for k, z in enumerate(distances):
+           print i,j,k
+
+"""
+dcoordcoc=sp.distance.cdist(cocmatrix, coordmatrix, 'euclidean')
+
+print ('')
+print ('Distances between atoms and center of charges')
+print ('')
+print dcoordcoc
+
+print (np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0)))
 """
 In this part, files are cleaned. If you want to let them, then you can comment
 all this section.
