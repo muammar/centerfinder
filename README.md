@@ -19,6 +19,7 @@ save,2103.2;
 core,10;
 group,28.1,31.1,-34.1;
 group,11.1,-27.1,29.1,30.1;
+}
 ```
 
 *Note:* As for now, the script only prints the rotations needed to do one body
