@@ -16,14 +16,30 @@ __status__ = "Development"
 """
 import csv
 
-# The number of core orbitals is asked.
+# We start asking information to do the input file
 
 print 'Please enter the number of core orbitals in your localization calculation:'
 co=raw_input()
-print ('CORE ORBITALS: ' +co)
-print 'Please enter the number of electronic orbitals in your calculation:'
+print ('CORE ORBITALS: ' +co + '\n')
+print 'Please enter the number of localized orbitals in your calculation:'
 tno=raw_input()
-print ('NUMBER OF ELECTRONIC ORBITALS: ' +tno)
+print ('NUMBER OF ELECTRONIC ORBITALS: ' +tno + '\n')
+print ('Now you will be asked about information to build the CASSCF input')
+print ('Please enter the number of CLOSED MOs')
+corb=raw_input()
+print ('NUMBER OF CLOSED MOs: ' +corb + '\n')
+print ('Please enter the number of FROZEN MOs')
+frozorb=raw_input()
+print ('NUMBER OF FROZEN MOs: ' +frozorb + '\n')
+print ('Please enter the number of OCCUPIED MOs')
+occorb=raw_input()
+print ('NUMBER OF OCCUPIED MOs: ' +occorb + '\n')
+actorb=int(corb)-int(occorb)
+print ('Your requested number of active orbitals is: ' + str(actorb))
+print ('Please enter your wavefunction in the format: wf,#electrons,Sym,Multiplicity')
+print ('e.g.: wf,224,1,0')
+wf=raw_input()
+print ('The wavefunction: ' +wf + '\n')
 
 """
 In this part of the code, we take the coordinates of the molecule from the
@@ -171,8 +187,10 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
 # Uncomment these two lines for debugging
       # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
       # print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
-    molpro.write('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]) + '\n')
+    molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
     molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }' + '\n')
+    molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2; }' + '\n')
+    molpro.write('' + '\n')
 
 """
 In this part, files are cleaned. If you want to let them, then you can comment

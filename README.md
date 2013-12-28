@@ -23,8 +23,9 @@ group,11.1,-27.1,29.1,30.1;
 ```
 
 *Note:* As for now, the script only prints the rotations needed to do one body
-interactions. In any time soon, it will do more than one body interactions and
-prepare the CASSCF input file.
+interactions, and CASSCF input file. In any time soon, it will do more than one
+body interactions and prepare the dynamical electronic correlation methods
+input file.
 
 ## Requirements
 
