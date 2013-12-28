@@ -160,15 +160,19 @@ print (sumlmonat)
 """
 Printing the input file with the rotation of the orbitals
 """
-# Funciona pero imprime todo
+# It works but it prints everything
 #for i1, i2 in zip(sumlmonat,sumlmonat[1:]):
 #    print ('! Atom ' + str(i1[1]) + ' Atom ' + str(i2[1]))
 #    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i1[0]) + '.1,' + str(tno) + '.1; }')
 
 import itertools as it
+molpro=open('molpro.in','w')
 for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
-    print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
-    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
+# Uncomment these two lines for debugging
+      # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
+      # print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
+    molpro.write('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]) + '\n')
+    molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }' + '\n')
 
 """
 In this part, files are cleaned. If you want to let them, then you can comment
