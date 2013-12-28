@@ -64,7 +64,7 @@ Then, as for the CASSCF calculation section it will ask you:
 - Number of CLOSED MOs.
 - Number of FROZEN MOs.
 - Number of OCCUPIED MOs.
-- The wavefunction in the format: wf,#electrons,Sym,Multiplicity
+- The wavefunction in the format: `wf,#electrons,Sym,Multiplicity`.
 
 Finally, a `molpro.in` file will be created at the end of the execution.
 
