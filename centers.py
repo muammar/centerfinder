@@ -160,8 +160,9 @@ print (sumlmonat)
 """
 Printing the input file with the rotation of the orbitals
 """
-for i in sumlmonat:
-    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0]) + '.1,'+str(tno)+'.1; }')
+for i1, i2 in zip(sumlmonat,sumlmonat[1:]):
+    print ('! Atom ' + str(i1[1]) + ' Atom ' + str(i2[1]))
+    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i1[0]) + '.1,' + str(tno) + '.1; }')
 
 """
 In this part, files are cleaned. If you want to let them, then you can comment
