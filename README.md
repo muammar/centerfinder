@@ -11,7 +11,7 @@ It reads your MOLPRO output file, and then it extracts coordinates and center
 of charges to then print which LMO are in between which atoms in the molecule.
 In your MOLPRO output file, a localization calculation must have been done
 beforehand. Take into account that your calculation has to be done using the
-`*symmetry,nosym;` card in MOLPRO. On the other hand, you have to save your LMO
+`symmetry,nosym;` card in MOLPRO. On the other hand, you have to save your LMO
 to the record `2103.2`. Below, an example of locali block in MOLPRO to be used
 to run this script:
 
