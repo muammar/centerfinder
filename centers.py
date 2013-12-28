@@ -23,7 +23,7 @@ co=raw_input()
 print ('CORE ORBITALS: ' +co)
 print 'Please enter the number of electronic orbitals in your calculation:'
 tno=raw_input()
-print ('CORE ORBITALS: ' +tno)
+print ('NUMBER OF ELECTRONIC ORBITALS: ' +tno)
 
 """
 In this part of the code, we take the coordinates of the molecule from the

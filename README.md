@@ -9,7 +9,17 @@ It reads your MOLPRO output file, and then it extracts coordinates and center
 of charges to then print which LMO are in between which atoms in the molecule.
 In your MOLPRO output file, a localization calculation must have been done
 beforehand. Take into account that your calculation has to be done using the
-*symmetry,nosym;* card in MOLPRO.
+*symmetry,nosym;* card in MOLPRO. On the other hand, you have to save your LMO
+to the record `2103.2`. Below, an example of locali block in MOLPRO to be used
+to run this script:
+
+```
+{locali;
+save,2103.2;
+core,10;
+group,28.1,31.1,-34.1;
+group,11.1,-27.1,29.1,30.1;
+```
 
 *Note:* As for now, the script only prints the rotations needed to do one body
 interactions. In any time soon, it will do more than one body interactions and
@@ -30,18 +40,14 @@ distribution or Mac OS X.
 Clone this repository:
 
 ```bash
-
 $ git clone https://github.com/muammar/centerfinder.git
-
 ```
 
 You need to rename your MOLPRO output file to `input`, and execute the script
 as follows:
 
 ```bash
-
 $ python $PATH/centerfinder/centers.py
-
 ```
 
 The program will ask you:
