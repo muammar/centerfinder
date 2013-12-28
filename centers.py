@@ -160,9 +160,15 @@ print (sumlmonat)
 """
 Printing the input file with the rotation of the orbitals
 """
-for i1, i2 in zip(sumlmonat,sumlmonat[1:]):
-    print ('! Atom ' + str(i1[1]) + ' Atom ' + str(i2[1]))
-    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i1[0]) + '.1,' + str(tno) + '.1; }')
+# Funciona pero imprime todo
+#for i1, i2 in zip(sumlmonat,sumlmonat[1:]):
+#    print ('! Atom ' + str(i1[1]) + ' Atom ' + str(i2[1]))
+#    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i1[0]) + '.1,' + str(tno) + '.1; }')
+
+import itertools as it
+for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
+    print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
+    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
 
 """
 In this part, files are cleaned. If you want to let them, then you can comment
