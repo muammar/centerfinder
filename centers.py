@@ -21,6 +21,9 @@ import csv
 print 'Please enter the number of core orbitals in your localization calculation:'
 co=raw_input()
 print ('CORE ORBITALS: ' +co)
+print 'Please enter the number of electronic orbitals in your calculation:'
+tno=raw_input()
+print ('CORE ORBITALS: ' +tno)
 
 """
 In this part of the code, we take the coordinates of the molecule from the
@@ -153,6 +156,13 @@ lmonat=np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0))
 adlmonat=[(int(co)+1),1]
 sumlmonat=lmonat+adlmonat
 print (sumlmonat)
+
+"""
+Printing the input file with the rotation of the orbitals
+"""
+for i in sumlmonat:
+    print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0]) + '.1,'+str(tno)+'.1; }')
+
 """
 In this part, files are cleaned. If you want to let them, then you can comment
 all this section.
