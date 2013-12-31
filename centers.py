@@ -200,6 +200,7 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1;}' + '\n')
     if answer in yes:
         molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
+        molpro.write('' + '\n')
     else:
         molpro.write('' + '\n')
 
