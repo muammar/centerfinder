@@ -24,22 +24,31 @@ print ('CORE ORBITALS: ' +co + '\n')
 print 'Please enter the number of localized orbitals in your calculation:'
 tno=raw_input()
 print ('NUMBER OF ELECTRONIC ORBITALS: ' +tno + '\n')
-print ('Now you will be asked about information to build the CASSCF input')
-print ('Please enter the number of CLOSED MOs')
-corb=raw_input()
-print ('NUMBER OF CLOSED MOs: ' +corb + '\n')
-print ('Please enter the number of FROZEN MOs')
-frozorb=raw_input()
-print ('NUMBER OF FROZEN MOs: ' +frozorb + '\n')
-print ('Please enter the number of OCCUPIED MOs')
-occorb=raw_input()
-print ('NUMBER OF OCCUPIED MOs: ' +occorb + '\n')
-actorb=int(occorb)-int(corb)
-print ('Your requested number of active orbitals is: ' + str(actorb))
-print ('Please enter your wavefunction in the format: wf,#electrons,Sym,Multiplicity')
-print ('e.g.: wf,224,1,0')
-wf=raw_input()
-print ('The wavefunction: ' +wf + '\n')
+
+print ('')
+print ('')
+print ('Would you like to build the CASSCF input file? [Default answer: no]')
+yes = set(['yes','y', 'ye', 'Yes', 'Ye', 'Y'])
+answer=raw_input()
+if answer in yes:
+    print ('')
+    print ('')
+    print ('Now you will be asked about information to build the CASSCF input')
+    print ('Please enter the number of CLOSED MOs')
+    corb=raw_input()
+    print ('NUMBER OF CLOSED MOs: ' +corb + '\n')
+    print ('Please enter the number of FROZEN MOs')
+    frozorb=raw_input()
+    print ('NUMBER OF FROZEN MOs: ' +frozorb + '\n')
+    print ('Please enter the number of OCCUPIED MOs')
+    occorb=raw_input()
+    print ('NUMBER OF OCCUPIED MOs: ' +occorb + '\n')
+    actorb=int(occorb)-int(corb)
+    print ('Your requested number of active orbitals is: ' + str(actorb))
+    print ('Please enter your wavefunction in the format: wf,#electrons,Sym,Multiplicity')
+    print ('e.g.: wf,224,1,0')
+    wf=raw_input()
+    print ('The wavefunction: ' +wf + '\n')
 
 """
 In this part of the code, we take the coordinates of the molecule from the
@@ -189,14 +198,21 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
       # print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
     molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
     molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1;}' + '\n')
-    molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
-    molpro.write('' + '\n')
+    if answer in yes:
+        molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
+    else:
+        molpro.write('' + '\n')
 
 print('Input file written to molpro.in')
 
 """
 In this part, files are cleaned. If you want to let them, then you can comment
 all this section.
-
-os.remove()
 """
+
+import os
+# Files related to the coordinates
+os.popen('rm -f coordvout coordv coord coordbarray')
+
+# Files related to the center of charges
+os.popen('rm -f coc cocbarray cocsvout cocsv cocbarrayr cocbarraycoc')
