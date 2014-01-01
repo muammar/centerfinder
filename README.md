@@ -33,6 +33,7 @@ electronic correlation methods input file.
 
 In order to run this script, you need to install in your system:
 
+- Python.
 - NumPy.
 - SciPy.
 
@@ -47,14 +48,12 @@ Clone this repository:
 $ git clone https://github.com/muammar/centerfinder.git
 ```
 
-You need to rename your MOLPRO output file to `input`, and execute the script
-as follows:
+Then you excute the program as follows:
 
 ```bash
-$ python $PATH/centerfinder/centers.py
+$ python $PATH/centerfinder/centers.py $input
 ```
-
-The program will ask you:
+Where `$input` is the name of your MOLPRO output file. The program will ask you:
 
 - Number of CORE MOs used in your calculation for doing the localization.
 - Number of Localized Molecular orbitals.
