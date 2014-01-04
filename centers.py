@@ -34,6 +34,8 @@ print ('NUMBER OF ELECTRONIC ORBITALS: ' +tno + '\n')
 
 print ('')
 print ('')
+
+# This is needed for the CASSCF section
 print ('Would you like to build the CASSCF input file? [Default answer: no]')
 yes = set(['yes','y', 'ye', 'Yes', 'Ye', 'Y'])
 answer=raw_input()
@@ -187,6 +189,10 @@ print dcoordcoc
 lmonat=np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0))
 adlmonat=[(int(co)+1),1]
 sumlmonat=lmonat+adlmonat
+
+print ('')
+print ('List of atoms that are near to certein LMO')
+print ('')
 print (sumlmonat)
 
 """
@@ -200,11 +206,18 @@ Printing the input file with the rotation of the orbitals
 import itertools as it
 molpro=open('molpro.in','w')
 for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
-# Uncomment these two lines for debugging
-      # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
-      # print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
-    molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
-    molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1;}' + '\n')
+    # This is statement into the for loop is to avoid doing rotations between
+    # LMO with higher energy with itself.
+    if str(r[0][0]) !=  str(tno):
+        # Uncomment these two lines for debugging
+        # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
+        # print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
+        molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
+        molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1;}' + '\n')
+    else:
+        molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
+        molpro.write('{merge,2104.2; orbital,2103.2; move;}' + '\n')
+        molpro.write('' + '\n')
     if answer in yes:
         molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
         molpro.write('' + '\n')
