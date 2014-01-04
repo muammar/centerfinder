@@ -191,7 +191,7 @@ adlmonat=[(int(co)+1),1]
 sumlmonat=lmonat+adlmonat
 
 print ('')
-print ('List of atoms that are near to certein LMO')
+print ('List of atoms that are near to certain LMO')
 print ('')
 print (sumlmonat)
 
