@@ -42,6 +42,8 @@ distribution or Mac OS X.
 
 ## How to use it
 
+### Installation and execution
+
 Clone this repository:
 
 ```bash
@@ -66,6 +68,10 @@ Then, as for the CASSCF calculation section it will ask you:
 - The wavefunction in the format: `wf,#electrons,Sym,Multiplicity`.
 
 Finally, a `molpro.in` file will be created at the end of the execution.
+
+### Update
+
+To update, just do a `git pull` in your `$PATH/centerfinder/` folder.
 
 ## Feedback?
 
