@@ -5,3 +5,5 @@ TODO
    distance ranges between 2.3 and 2.7 Å.
 - Put a verbose argument to print every process done.
 - Strip atoms not desired.
+- Help to prepare input file to add electron correlation methods to the CASSCF
+  calculation.
