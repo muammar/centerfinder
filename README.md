@@ -55,12 +55,12 @@ $ python $PATH/centerfinder/centers.py $input
 ```
 Where `$input` is the name of your MOLPRO output file. The program will ask you:
 
-1.Number of CORE MOs used in your calculation for doing the localization.
+1. Number of CORE MOs used in your calculation for doing the localization.
 - Number of Localized Molecular orbitals.
 
 Then, as for the CASSCF calculation section it will ask you:
 
-- Number of CLOSED MOs.
+3. Number of CLOSED MOs.
 - Number of FROZEN MOs.
 - Number of OCCUPIED MOs.
 - The wavefunction in the format: `wf,#electrons,Sym,Multiplicity`.
