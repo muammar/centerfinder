@@ -117,8 +117,16 @@ with open(inputuser) as infile, open('coc','w') as centersoc:
 """ Here I convert center of chargers file to csv so that I can make use of the
 csv module in python.
 """
+# This code below used to work when files were fixed width
+###with open('coc') as infile, open('cocsv', 'w') as outfile:
+###    outfile.write(infile.read().replace("    ", ", "))
+
+# This is a more general code for making it work when you don't have width.
 with open('coc') as infile, open('cocsv', 'w') as outfile:
-    outfile.write(infile.read().replace("    ", ", "))
+    for line in infile:
+        outfile.write(" ".join(line.split()).replace(' ', ','))
+        #outfile.write(",") # trailing comma shouldn't matter
+        outfile.write("\n")
 
 # Unneeded columns are deleted from the csv
 input = open('cocsv', 'rb')
@@ -136,7 +144,7 @@ with open('cocsvout','rb') as source:
     with open('cocbarray','wb') as result:
         wtr= csv.writer(result)
         for r in rdr:
-            wtr.writerow( (r[3], r[4], r[5]) )
+            wtr.writerow( (r[2], r[3], r[4]) )
 
 # Now we strip the CORE ORBITALS from the center of charges
 def skip_first(seq, n):
@@ -220,6 +228,9 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
         molpro.write('' + '\n')
     if answer in yes:
         molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
+        molpro.write('{ccsd(t); orbital,2105.2; occ,'+ occorb +'; core,' + frozorb + '; ' + wf + ';}' + '\n')
+
+        molpro.write('einc_' + str(r[0][1]) + '-' + str(r[1][1]) + '=energy-ehf;' + '\n')
         molpro.write('' + '\n')
     else:
         molpro.write('' + '\n')
