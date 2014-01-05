@@ -6,7 +6,7 @@ center of charges in order to perform later incremental calculations as stated
 in H. Stoll, Chem. Phys. Lett., 1992, 19.
 
 __author__ = "Muammar El Khatib"
-__copyright__ = "Copyright 2013, Muammar El Khatib"
+__copyright__ = "Copyright 2014, Muammar El Khatib"
 __credits__ = [""]
 __license__ = "GPL"
 __version__ = "3"
