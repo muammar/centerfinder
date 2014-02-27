@@ -25,7 +25,7 @@ import csv
 
 # We start asking information to do the input file
 
-print 'Please enter the number of core orbitals in your localization calculation:'
+print ('Please enter the number of core orbitals in your localization calculation:')
 co=raw_input()
 print ('CORE ORBITALS: ' +co + '\n')
 print 'Please enter the number of localized orbitals in your calculation:'
