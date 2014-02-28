@@ -33,7 +33,7 @@ electronic correlation methods input file.
 
 In order to run this script, you need to install in your system:
 
-- Python.
+- Python 2.7 (I am porting this to work with Python >3)
 - NumPy.
 - SciPy.
 
