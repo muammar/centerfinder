@@ -98,7 +98,9 @@ with open('coordvout','rb') as source:
     with open('coordbarray','wb') as result:
         wtr= csv.writer(result)
         for r in rdr:
-            wtr.writerow( (r[3], r[4], r[5]) )
+  # Here, we strip out atoms different from C
+            if not r[1].startswith('H'):
+                wtr.writerow( (r[3], r[4], r[5]) )
 
 """
 The same process is done now to take out the centers of charges from the MOLPRO
@@ -203,6 +205,13 @@ print ('List of atoms that are near to certain LMO')
 print ('')
 print (sumlmonat)
 
+# We take out pairs of atoms whose LMO are shared.
+#
+from collections import Counter
+cnt = Counter(zip(*sumlmonat)[0])
+sumlmonat = [p for p in sumlmonat if cnt[p[0]] > 1]
+print sumlmonat
+
 """
 Printing the input file with the rotation of the orbitals
 """
@@ -215,7 +224,7 @@ import itertools as it
 molpro=open('molpro.in','w')
 for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     # This is statement into the for loop is to avoid doing rotations between
-    # LMO with higher energy with itself.
+    # a LMO which is HOMO with itself.
     if str(r[0][0]) !=  str(tno):
         # Uncomment these two lines for debugging
         # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
