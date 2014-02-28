@@ -7,3 +7,4 @@ TODO
 - Strip atoms not desired.
 - Help to prepare input file to add electron correlation methods to the CASSCF
   calculation.
+- Port it to Python 3.4.

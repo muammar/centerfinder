@@ -28,7 +28,7 @@ import csv
 print ('Please enter the number of core orbitals in your localization calculation:')
 co=raw_input()
 print ('CORE ORBITALS: ' +co + '\n')
-print 'Please enter the number of localized orbitals in your calculation:'
+print ('Please enter the number of localized orbitals in your calculation:')
 tno=raw_input()
 print ('NUMBER OF ELECTRONIC ORBITALS: ' +tno + '\n')
 
@@ -183,7 +183,7 @@ distances=sp.distance.cdist(coordmatrix,coordmatrix, 'euclidean')
 print ('')
 print ('Distances between atoms')
 print ('')
-print distances
+print (distances)
 
 atnearat=np.argwhere((distances > 2.3) & (distances < 2.7))
 print (atnearat)
@@ -194,7 +194,7 @@ dcoordcoc=sp.distance.cdist(cocmatrix, coordmatrix, 'euclidean')
 print ('')
 print ('Distances between atoms and center of charges')
 print ('')
-print dcoordcoc
+print (dcoordcoc)
 
 lmonat=np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0))
 adlmonat=[(int(co)+1),1]
@@ -207,10 +207,24 @@ print (sumlmonat)
 
 # We take out pairs of atoms whose LMO are shared.
 #
+"""
 from collections import Counter
 cnt = Counter(zip(*sumlmonat)[0])
 sumlmonat = [p for p in sumlmonat if cnt[p[0]] > 1]
 print sumlmonat
+"""
+prev = None
+newp = []
+length = len(sumlmonat) - 1
+for i in range(length):
+    if sumlmonat[i][0] == sumlmonat[i+1][0] or sumlmonat[i][0] == prev:
+        newp.append(sumlmonat[i])
+        prev = sumlmonat[i][0]
+
+if sumlmonat[length][0] == sumlmonat[length-1][0]:
+  newp.append(sumlmonat[length])
+sumlmonat=newp
+print (sumlmonat)
 
 """
 Printing the input file with the rotation of the orbitals
