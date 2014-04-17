@@ -183,6 +183,7 @@ distances=sp.distance.cdist(coordmatrix,coordmatrix, 'euclidean')
 print ('')
 print ('Distances between atoms')
 print ('')
+print ('Shape of the matrix: '+str(distances.shape))
 print (distances)
 
 atnearat=np.argwhere((distances > 2.3) & (distances < 2.7))
@@ -207,6 +208,7 @@ print (sumlmonat)
 
 # We take out pairs of atoms whose LMO are shared.
 #
+# http://stackoverflow.com/questions/22093001/comparing-and-discarding-two-consecutive-elements-not-complying-certain-conditio
 """
 from collections import Counter
 cnt = Counter(zip(*sumlmonat)[0])
@@ -239,6 +241,12 @@ molpro=open('molpro.in','w')
 for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     # This is statement into the for loop is to avoid doing rotations between
     # a LMO which is HOMO with itself.
+    #
+    #
+    # Uncomment this line for debugging
+    #print (str(r[0][0]), str(tno))
+    #
+    #
     if str(r[0][0]) !=  str(tno):
         # Uncomment these two lines for debugging
         # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
@@ -258,7 +266,57 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     else:
         molpro.write('' + '\n')
 
-print('Input file written to molpro.in')
+print('One body interactions written to file molpro.in')
+
+"""
+TWO BODY INTERACTIONS
+"""
+
+print ('two body interactions')
+sumita=0
+for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
+    if str(r[0][0]) !=  str(tno):
+        a=[]
+        a.append((r[0][1],r[1][1]))
+        #print (a)
+        sumita=sumita+1
+        #print (sumita)
+        #print (r)
+        b=[]
+        b.append(a)
+    print ('The LMO '+ str(r[0][0]) + ' is located between atoms ' + str(b))
+
+"""
+K-nearest neighbors theory is going to be used in order to perform the two body
+calculations.
+"""
+
+
+from scipy.spatial import cKDTree as KDTree
+
+#Input data
+#MyData = [[0,0,0],[1,6,0],[2,9,0]]
+MyData = coordmatrix
+
+#Convert data to numpy array, requirement for scipy classes
+ArrayOfPoints = np.array(MyData)
+
+#Create KDTree from numpy array
+KDTreeOfPoints = KDTree(ArrayOfPoints)
+
+#Iterate through points
+for PointNum in range(len(MyData)):
+
+    #Query KDTree, return distance to nearest n points and their point numbers
+    #Need to have second parameter = 2 because "closest" neighbor in KDTree is itself
+    Distances,Indices = KDTreeOfPoints.query(ArrayOfPoints[PointNum],3)
+
+    #Get info about nearest neighbor.
+    CurrentPoint = str(MyData[PointNum])
+    NearestNeighbor = str(MyData[Indices[1]])
+    NeighborDist = float(Distances[1])
+
+    print "Nearest to %s is %s, dist = %f" % (CurrentPoint,NearestNeighbor,NeighborDist)
 
 """
 In this part, files are cleaned. If you want to let them, then you can comment
