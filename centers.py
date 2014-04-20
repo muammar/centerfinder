@@ -238,13 +238,14 @@ Printing the input file with the rotation of the orbitals
 
 import itertools as it
 molpro=open('molpro.in','w')
+twobody=[]
 for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     # This is statement into the for loop is to avoid doing rotations between
     # a LMO which is HOMO with itself.
     #
     #
     # Uncomment this line for debugging
-    #print (str(r[0][0]), str(tno))
+    print ([str(r[0][1]), str(r[1][1])], str(r[0][0]), str(tno))
     #
     #
     if str(r[0][0]) !=  str(tno):
@@ -266,62 +267,99 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     else:
         molpro.write('' + '\n')
 
-print('One body interactions written to file molpro.in')
 
+    twobody.append(([r[0][1], r[1][1]], r[0][0]))
+print ('printing two body mine')
+print (twobody)
+
+print ('')
+print ('')
+print ('printing two body permutations')
+print ('')
+print ('')
+permuta=list(it.permutations(twobody,2))
+combina=list(it.combinations(twobody,2))
+print ('')
+print (permuta)
+print (len(permuta))
+
+print (combina)
+print (len(combina))
+
+print ('')
+print('One body interactions written to file molpro.in')
 """
 TWO BODY INTERACTIONS
 """
 
-print ('two body interactions')
-sumita=0
-for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
-    if str(r[0][0]) !=  str(tno):
-        a=[]
-        a.append((r[0][1],r[1][1]))
-        #print (a)
-        sumita=sumita+1
-        #print (sumita)
-        #print (r)
-        b=[]
-        b.append(a)
-    print ('The LMO '+ str(r[0][0]) + ' is located between atoms ' + str(b))
-
 """
-K-nearest neighbors theory is going to be used in order to perform the two body
-calculations.
+tno-1 to do rotations
 """
+tnom=int(tno)-1
+print (tnom)
+for i in combina:
+    print (i)
+    print('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+    if i[0][1] < i[1][1]:
+        print ('true')
+    else:
+        print ('false')
+    print('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1; rotate,}' '\n')
 
 
-from scipy.spatial import cKDTree as KDTree
-
-#Input data
-#MyData = [[0,0,0],[1,6,0],[2,9,0]]
-MyData = coordmatrix
-
-#Convert data to numpy array, requirement for scipy classes
-ArrayOfPoints = np.array(MyData)
-
-#Create KDTree from numpy array
-KDTreeOfPoints = KDTree(ArrayOfPoints)
-
-#Iterate through points
-for PointNum in range(len(MyData)):
-
-    #Query KDTree, return distance to nearest n points and their point numbers
-    #Need to have second parameter = 2 because "closest" neighbor in KDTree is itself
-    Distances,Indices = KDTreeOfPoints.query(ArrayOfPoints[PointNum],3)
-
-    #Get info about nearest neighbor.
-    CurrentPoint = str(MyData[PointNum])
-    NearestNeighbor = str(MyData[Indices[1]])
-    NeighborDist = float(Distances[1])
-
-    print "Nearest to %s is %s, dist = %f" % (CurrentPoint,NearestNeighbor,NeighborDist)
-
-"""
-In this part, files are cleaned. If you want to let them, then you can comment
-all this section.
-"""
+#print list(it.permutations(sumlmonat,2))
+##
+##
+##print ('two body interactions')
+##sumita=0
+##for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
+##    if str(r[0][0]) !=  str(tno):
+##        a=[]
+##        a.append((r[0][1],r[1][1]))
+##        #print (a)
+##        sumita=sumita+1
+##        #print (sumita)
+##        #print (r)
+##        b=[]
+##        b.append(a)
+##    print ('The LMO '+ str(r[0][0]) + ' is located between atoms ' + str(b))
+##
+##"""
+##K-nearest neighbors theory is going to be used in order to perform the two body
+##calculations.
+##"""
+##
+##
+##from scipy.spatial import cKDTree as KDTree
+##
+###Input data
+###MyData = [[0,0,0],[1,6,0],[2,9,0]]
+##MyData = coordmatrix
+##
+###Convert data to numpy array, requirement for scipy classes
+##ArrayOfPoints = np.array(MyData)
+##
+###Create KDTree from numpy array
+##KDTreeOfPoints = KDTree(ArrayOfPoints)
+##
+###Iterate through points
+##for PointNum in range(len(MyData)):
+##
+##    #Query KDTree, return distance to nearest n points and their point numbers
+##    #Need to have second parameter = 2 because "closest" neighbor in KDTree is itself
+##    Distances,Indices = KDTreeOfPoints.query(ArrayOfPoints[PointNum],3)
+##
+##    #Get info about nearest neighbor.
+##    CurrentPoint = str(MyData[PointNum])
+##    NearestNeighbor = str(MyData[Indices[1]])
+##    NeighborDist = float(Distances[1])
+##
+##    print "Nearest to %s is %s, dist = %f" % (CurrentPoint,NearestNeighbor,NeighborDist)
+##
+##"""
+##In this part, files are cleaned. If you want to let them, then you can comment
+##all this section.
+##"""
 
 import os
 # Files related to the coordinates
