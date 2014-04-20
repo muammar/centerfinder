@@ -269,6 +269,10 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
 
 
     twobody.append(([r[0][1], r[1][1]], r[0][0]))
+print('One body interactions written to file molpro.in')
+"""
+TWO BODY INTERACTIONS
+"""
 print ('printing two body mine')
 print (twobody)
 
@@ -287,25 +291,34 @@ print (combina)
 print (len(combina))
 
 print ('')
-print('One body interactions written to file molpro.in')
-"""
-TWO BODY INTERACTIONS
-"""
 
 """
 tno-1 to do rotations
 """
 tnom=int(tno)-1
-print (tnom)
+#print (tnom)
+molpro2=open('molpro2.in','w')
 for i in combina:
-    print (i)
-    print('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
-    if i[0][1] < i[1][1]:
-        print ('true')
-    else:
-        print ('false')
-    print('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1; rotate,}' '\n')
 
+    if str(i[0][1]) !=  str(tnom) and str(i[1][1]) != str(tno):
+        molpro2.write ('lo que puse en el if \n')
+        molpro2.write ('str(i[0][1]),str(tnom), str(i[1][1]), str(tno) \n')
+        #print (i)
+        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
+    elif str(i[0][1]) ==  str(tnom) and str(i[1][1]) == str(tno):
+        #print (i)
+        molpro2.write ('opposites1 \n')
+        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('{merge,2104.2; orbital,2103.2; move; }' '\n')
+    elif str(i[0][1]) !=  str(tnom) and str(i[1][1]) != str(tno):
+        print('opposites2 \n')
+        print('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        print('{merge,2104.2; orbital,2103.2; move; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
+#       if i[0][1] < i[1][1]:
+#           print ('true')
+#       else:
+#           print ('false')
 
 #print list(it.permutations(sumlmonat,2))
 ##
