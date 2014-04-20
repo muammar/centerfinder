@@ -24,10 +24,9 @@ group,11.1,-27.1,29.1,30.1;
 }
 ```
 
-*Note:* As for now, the script only prepares an input file with the rotations
-needed to do one body interactions, and CASSCF input file. In any time soon, it
-will prepare more than one body interactions and prepare the dynamical
-electronic correlation methods input file.
+*Note:* As for now, the script prepares two input files with the rotations
+needed to do one- and two- body interactions, and the CASSCF input file for the
+former one. I am preparing the CASSCF section for the two-body interactions.
 
 ## Requirements
 

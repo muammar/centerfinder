@@ -238,7 +238,13 @@ Printing the input file with the rotation of the orbitals
 
 import itertools as it
 molpro=open('molpro.in','w')
+# The array for treat the two body interactions is started as an unknown in
+# twobody.
+
 twobody=[]
+
+# Below we write the one body interactions in molpro.in
+
 for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     # This is statement into the for loop is to avoid doing rotations between
     # a LMO which is HOMO with itself.
@@ -269,7 +275,9 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
 
 
     twobody.append(([r[0][1], r[1][1]], r[0][0]))
+
 print('One body interactions written to file molpro.in')
+
 """
 TWO BODY INTERACTIONS
 """
@@ -284,11 +292,11 @@ print ('')
 permuta=list(it.permutations(twobody,2))
 combina=list(it.combinations(twobody,2))
 print ('')
-print (permuta)
-print (len(permuta))
+#print (permuta)
+#print (len(permuta))
 
-print (combina)
-print (len(combina))
+#print (combina)
+#print (len(combina))
 
 print ('')
 
@@ -298,76 +306,37 @@ tno-1 to do rotations
 tnom=int(tno)-1
 #print (tnom)
 molpro2=open('molpro2.in','w')
+molpro2.write('\n \n')
+molpro2.write('!TWO BODY CALCULATIONS \n \n')
 for i in combina:
-
-    if str(i[0][1]) !=  str(tnom) and str(i[1][1]) != str(tno):
-        molpro2.write ('lo que puse en el if \n')
-        molpro2.write ('str(i[0][1]),str(tnom), str(i[1][1]), str(tno) \n')
-        #print (i)
-        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
-        molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
-    elif str(i[0][1]) ==  str(tnom) and str(i[1][1]) == str(tno):
-        #print (i)
-        molpro2.write ('opposites1 \n')
-        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
-        molpro2.write('{merge,2104.2; orbital,2103.2; move; }' '\n')
-    elif str(i[0][1]) !=  str(tnom) and str(i[1][1]) != str(tno):
-        print('opposites2 \n')
-        print('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
-        print('{merge,2104.2; orbital,2103.2; move; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
 #       if i[0][1] < i[1][1]:
 #           print ('true')
 #       else:
 #           print ('false')
 
-#print list(it.permutations(sumlmonat,2))
-##
-##
-##print ('two body interactions')
-##sumita=0
-##for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
-##    if str(r[0][0]) !=  str(tno):
-##        a=[]
-##        a.append((r[0][1],r[1][1]))
-##        #print (a)
-##        sumita=sumita+1
-##        #print (sumita)
-##        #print (r)
-##        b=[]
-##        b.append(a)
-##    print ('The LMO '+ str(r[0][0]) + ' is located between atoms ' + str(b))
-##
-##"""
-##K-nearest neighbors theory is going to be used in order to perform the two body
-##calculations.
-##"""
-##
-##
-##from scipy.spatial import cKDTree as KDTree
-##
-###Input data
-###MyData = [[0,0,0],[1,6,0],[2,9,0]]
-##MyData = coordmatrix
-##
-###Convert data to numpy array, requirement for scipy classes
-##ArrayOfPoints = np.array(MyData)
-##
-###Create KDTree from numpy array
-##KDTreeOfPoints = KDTree(ArrayOfPoints)
-##
-###Iterate through points
-##for PointNum in range(len(MyData)):
-##
-##    #Query KDTree, return distance to nearest n points and their point numbers
-##    #Need to have second parameter = 2 because "closest" neighbor in KDTree is itself
-##    Distances,Indices = KDTreeOfPoints.query(ArrayOfPoints[PointNum],3)
-##
-##    #Get info about nearest neighbor.
-##    CurrentPoint = str(MyData[PointNum])
-##    NearestNeighbor = str(MyData[Indices[1]])
-##    NeighborDist = float(Distances[1])
-##
-##    print "Nearest to %s is %s, dist = %f" % (CurrentPoint,NearestNeighbor,NeighborDist)
+    if str(i[0][1]) !=  str(tnom) and str(i[1][1]) != str(tno):
+        """
+        Uncomment to debug  the if shown above
+        """
+        #molpro2.write('If first case \n')
+        #molpro2.write('str(i[0][1]),str(tnom), str(i[1][1]), str(tno) \n')
+        #print (i)
+        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
+        molpro2.write('' + '\n')
+    elif str(i[0][1]) ==  str(tnom) and str(i[1][1]) == str(tno):
+        #print (i)
+        #molpro2.write('If second case \n')
+        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('{merge,2104.2; orbital,2103.2; move; }' '\n')
+        molpro2.write('' + '\n')
+    else:
+        #molpro2.write('If third case \n')
+        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
+        molpro2.write('' + '\n')
+
+print('Two body interactions written to file molpro2.in')
 ##
 ##"""
 ##In this part, files are cleaned. If you want to let them, then you can comment
