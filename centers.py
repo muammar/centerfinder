@@ -238,8 +238,7 @@ Printing the input file with the rotation of the orbitals
 
 import itertools as it
 molpro=open('molpro.in','w')
-# The array for treat the two body interactions is started as an unknown in
-# twobody.
+# The array for treating the two body interactions is initialized
 
 twobody=[]
 
