@@ -269,26 +269,21 @@ for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
     if answer in yes:
         molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
         molpro.write('{ccsd(t); orbital,2105.2; occ,'+ occorb +'; core,' + frozorb + '; ' + wf + ';}' + '\n')
-        molpro.write('einc_' + str(idxob) + '_' + str(r[0][1]) + '_' + str(r[1][1]) + '=energy-ehf;' + '\n')
+        molpro.write('einc__' + str(idxob) + '__' + str(r[0][1]) + '_' + str(r[1][1]) + '=energy-ehf;' + '\n')
         molpro.write('' + '\n')
     else:
         molpro.write('' + '\n')
 
-    onebody.append(str(r[0][1]) + '_' + str(r[1][1]))
+    # This is going to be an index
+    #      iteraction  +   atom1    +    atom 2  +  orbital
+    onebody.append([str(idxob),str(r[0][1]),str(r[1][1]),str(r[0][0])])
     twobody.append(([r[0][1], r[1][1]], r[0][0]))
 
-"""
-A borrar
-onboindex=[]
-for i, onebidx in enumerate(onebody):
-    print ('el enumerate')
-    print (i, onebidx)
-    onboindex.append([i,onboindex])
+onebodytwo=onebody
 
-print ('arreglo despues')
-print (onboindex)
 
-"""
+print ('my index verga')
+print (onebody)
 
 print('One body interactions written to file molpro.in')
 
@@ -340,6 +335,19 @@ for i in combina:
         molpro2.write('! LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
         molpro2.write('' + '\n')
+
+        print ('First bond')
+        print ([str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])])
+        idxfcfb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])) == (ss[1],ss[2],ss[3])]
+        for ifcfb in idxfcfb:
+            print (onebody[ifcfb])
+
+        print ('Second bond')
+        print ([str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])])
+        idxfcsb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])) == (ss[1],ss[2],ss[3])]
+        for ifcsb in idxfcsb:
+            print (onebody[ifcsb])
+
     elif str(i[0][1]) ==  str(tnom) and str(i[1][1]) == str(tno):
         #print (i)
         #molpro2.write('If second case \n')
