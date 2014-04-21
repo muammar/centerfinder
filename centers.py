@@ -238,13 +238,16 @@ Printing the input file with the rotation of the orbitals
 
 import itertools as it
 molpro=open('molpro.in','w')
-# The array for treating the two body interactions is initialized
 
+# The array for treating the two body interactions is initialized
+onebody=[] #This is to substract energies of 1 body from the two-body part
 twobody=[]
 
 # Below we write the one body interactions in molpro.in
 
-for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
+for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
+    print ('el enumerate dentro ')
+    print (idxob, r)
     # This is statement into the for loop is to avoid doing rotations between
     # a LMO which is HOMO with itself.
     #
@@ -262,18 +265,30 @@ for r in it.izip_longest(sumlmonat[::2], sumlmonat[1::2]):
     else:
         molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
         molpro.write('{merge,2104.2; orbital,2103.2; move;}' + '\n')
-        molpro.write('' + '\n')
+        #molpro.write('' + '\n')
     if answer in yes:
         molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
         molpro.write('{ccsd(t); orbital,2105.2; occ,'+ occorb +'; core,' + frozorb + '; ' + wf + ';}' + '\n')
-
-        molpro.write('einc_' + str(r[0][1]) + '-' + str(r[1][1]) + '=energy-ehf;' + '\n')
+        molpro.write('einc_' + str(idxob) + '_' + str(r[0][1]) + '_' + str(r[1][1]) + '=energy-ehf;' + '\n')
         molpro.write('' + '\n')
     else:
         molpro.write('' + '\n')
 
-
+    onebody.append(str(r[0][1]) + '_' + str(r[1][1]))
     twobody.append(([r[0][1], r[1][1]], r[0][0]))
+
+"""
+A borrar
+onboindex=[]
+for i, onebidx in enumerate(onebody):
+    print ('el enumerate')
+    print (i, onebidx)
+    onboindex.append([i,onboindex])
+
+print ('arreglo despues')
+print (onboindex)
+
+"""
 
 print('One body interactions written to file molpro.in')
 
@@ -303,6 +318,8 @@ print ('')
 tno-1 to do rotations
 """
 tnom=int(tno)-1
+
+
 #print (tnom)
 molpro2=open('molpro2.in','w')
 molpro2.write('\n \n')
@@ -320,19 +337,34 @@ for i in combina:
         #molpro2.write('If first case \n')
         #molpro2.write('str(i[0][1]),str(tnom), str(i[1][1]), str(tno) \n')
         #print (i)
-        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('! LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
         molpro2.write('' + '\n')
     elif str(i[0][1]) ==  str(tnom) and str(i[1][1]) == str(tno):
         #print (i)
         #molpro2.write('If second case \n')
-        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('! LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; }' '\n')
         molpro2.write('' + '\n')
     else:
         #molpro2.write('If third case \n')
-        molpro2.write('! Localized MO between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('! LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
+        molpro2.write('' + '\n')
+    # This is added to do the casscf part of the input
+    if answer in yes:
+        """
+        corb-1 to do casscf input
+        frozorb-1 to do casscf input
+        """
+        corbcas=int(corb)-1
+        frozorbcas=int(frozorb)-1
+        molpro2.write('{multi; orbital,2104.2; closed,' + str(corbcas) + '; occ,'+ str(occorb) +'; frozen,' + str(frozorbcas) +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
+        molpro2.write('{ccsd(t); orbital,2105.2; occ,'+ str(occorb) +'; core,' + str(frozorbcas) + '; ' + wf + ';}' + '\n')
+
+        molpro2.write('einc2b_' + str(i[0][0]) + '-' + str(i[1][0]) + '=energy-ehf;' + '\n')
+        molpro2.write('' + '\n')
+    else:
         molpro2.write('' + '\n')
 
 print('Two body interactions written to file molpro2.in')
