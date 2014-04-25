@@ -12,8 +12,8 @@ of charges to then print which LMO are in between which atoms in the molecule.
 In your MOLPRO output file, a localization calculation must have been done
 beforehand. Take into account that your calculation has to be done using the
 `symmetry,nosym;` card in MOLPRO. On the other hand, you have to save your LMO
-to the record `2103.2`. Below, an example of locali block in MOLPRO to be used
-to run this script:
+to the record `2103.2`. Below, an example of the `locali block` in MOLPRO to be
+used to run this program:
 
 ```
 {locali;
@@ -24,9 +24,9 @@ group,11.1,-27.1,29.1,30.1;
 }
 ```
 
-*Note:* As for now, the script prepares two input files with the rotations
-needed to do one- and two- body interactions, and the CASSCF input file for the
-former one. I am preparing the CASSCF section for the two-body interactions.
+*Note:* The script prepares two input files with the rotations needed to do
+one- and two- body interactions, as well as the CASSCF and CCSD input. I will
+generalize more this script in the coming time.
 
 ## Requirements
 
@@ -43,7 +43,7 @@ distribution or Mac OS X.
 
 ### Installation and execution
 
-Clone this repository:
+Clone this git repository:
 
 ```bash
 $ git clone https://github.com/muammar/centerfinder.git
@@ -59,7 +59,7 @@ Where `$input` is the name of your MOLPRO output file. The program will ask you:
 1. Number of CORE MOs used in your calculation for doing the localization.
 - Number of Localized Molecular orbitals.
 
-Then, as for the CASSCF calculation section it will ask you:
+Then, for the CASSCF calculation section it will ask you:
 
 3. Number of CLOSED MOs.
 - Number of FROZEN MOs.
@@ -68,9 +68,10 @@ Then, as for the CASSCF calculation section it will ask you:
 
 Finally, a `molpro.in` file will be created at the end of the execution.
 
-### Update
+### How to update it?
 
-To update, just do a `git pull` in your `$PATH/centerfinder/` folder.
+To update this program, just do a `git pull` in your `$PATH/centerfinder/`
+folder.
 
 ## Feedback?
 
