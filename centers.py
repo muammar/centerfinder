@@ -295,7 +295,7 @@ print (twobody)
 
 print ('')
 print ('')
-print ('printing two body permutations')
+print ('printing two body permutations and combinations')
 print ('')
 print ('')
 permuta=list(it.permutations(twobody,2))
@@ -332,7 +332,7 @@ for i in combina:
         #molpro2.write('If first case \n')
         #molpro2.write('str(i[0][1]),str(tnom), str(i[1][1]), str(tno) \n')
         #print (i)
-        molpro2.write('! LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('! first if LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
         molpro2.write('' + '\n')
 
@@ -351,14 +351,14 @@ for i in combina:
     elif str(i[0][1]) ==  str(tnom) and str(i[1][1]) == str(tno):
         #print (i)
         #molpro2.write('If second case \n')
-        molpro2.write('! LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
+        molpro2.write('! second if LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; }' '\n')
         molpro2.write('' + '\n')
     else:
         #molpro2.write('If third case \n')
-        molpro2.write('! LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
-        molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
+        molpro2.write('! third if LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('' + '\n')
+        molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1;}' '\n')
     # This is added to do the casscf part of the input
     if answer in yes:
         """
