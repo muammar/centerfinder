@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This python script intends to look for localized MO near to atoms based on the
+This python program intends to look for localized MO near to atoms based on the
 center of charges in order to perform later incremental calculations as stated
 in H. Stoll, Chem. Phys. Lett., 1992, 19.
 
@@ -240,7 +240,7 @@ import itertools as it
 molpro=open('molpro.in','w')
 
 # The array for treating the two body interactions is initialized
-onebody=[] #This is to substract energies of 1 body from the two-body part
+onebody=[] #This array is needed to substract 1 body energies in the two-body interaction part
 twobody=[]
 
 # Below we write the one body interactions in molpro.in
@@ -282,7 +282,7 @@ for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
 onebodytwo=onebody
 
 
-print ('my index verga')
+print ('My built index')
 print (onebody)
 
 print('One body interactions written to file molpro.in')
@@ -307,7 +307,7 @@ print ('')
 #print (combina)
 #print (len(combina))
 
-print ('')
+#print ('')
 
 """
 tno-1 to do rotations
@@ -319,6 +319,7 @@ tnom=int(tno)-1
 molpro2=open('molpro2.in','w')
 molpro2.write('\n \n')
 molpro2.write('!TWO BODY CALCULATIONS \n \n')
+
 for i in combina:
 #       if i[0][1] < i[1][1]:
 #           print ('true')
@@ -342,13 +343,14 @@ for i in combina:
         idxfcfb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])) == (ss[1],ss[2],ss[3])]
         for ifcfb in idxfcfb:
             print (onebody[ifcfb])
+            onebody1if1b=onebody[ifcfb]
 
         print ('Second bond')
         print ([str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])])
         idxfcsb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])) == (ss[1],ss[2],ss[3])]
         for ifcsb in idxfcsb:
             print (onebody[ifcsb])
-
+            onebody1if2b=onebody[ifcsb]
     elif str(i[0][1]) ==  str(tnom) and str(i[1][1]) == str(tno):
         #print (i)
         #molpro2.write('If second case \n')
@@ -362,12 +364,14 @@ for i in combina:
         idx2fcfb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])) == (ss[1],ss[2],ss[3])]
         for i2fcfb in idx2fcfb:
             print (onebody[i2fcfb])
+            onebody1if1b=onebody[i2fcfb]
 
         print ('Second bond')
         print ([str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])])
         idx2fcsb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])) == (ss[1],ss[2],ss[3])]
         for i2fcsb in idx2fcsb:
             print (onebody[i2fcsb])
+            onebody1if2b=onebody[i2fcsb]
     else:
         #molpro2.write('If third case \n')
         molpro2.write('! third if LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
@@ -380,12 +384,14 @@ for i in combina:
         idx3fcfb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])) == (ss[1],ss[2],ss[3])]
         for i3fcfb in idx3fcfb:
             print (onebody[i3fcfb])
+            onebody1if1b=onebody[i3fcfb]
 
         print ('Second bond')
         print ([str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])])
         idx3fcsb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])) == (ss[1],ss[2],ss[3])]
         for i3fcsb in idx3fcsb:
             print (onebody[i3fcsb])
+            onebody1if2b=onebody[i3fcsb]
 
     # This is added to do the casscf part of the input
     if answer in yes:
@@ -398,7 +404,14 @@ for i in combina:
         molpro2.write('{multi; orbital,2104.2; closed,' + str(corbcas) + '; occ,'+ str(occorb) +'; frozen,' + str(frozorbcas) +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
         molpro2.write('{ccsd(t); orbital,2105.2; occ,'+ str(occorb) +'; core,' + str(frozorbcas) + '; ' + wf + ';}' + '\n')
 
-        molpro2.write('einc2b_' + str(i[0][0]) + '-' + str(i[1][0]) + '=energy-ehf;' + '\n')
+        molpro2.write('einc2b_' + str(i[0][0]) + '-' + str(i[1][0])
+                + '=energy-ehf'
+                + '-'
+                + 'einc__'+str(onebody1if1b[0])+'__'+str(onebody1if1b[1])+'_'+str(onebody1if1b[2])
+                + '-'
+                + 'einc__'+str(onebody1if2b[0])+'__'+str(onebody1if2b[1])+'_'+str(onebody1if2b[2])
+                + ';' + '\n')
+
         molpro2.write('' + '\n')
     else:
         molpro2.write('' + '\n')
