@@ -336,6 +336,7 @@ for i in combina:
         molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
         molpro2.write('' + '\n')
 
+        print ('This is a test for the first if')
         print ('First bond')
         print ([str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])])
         idxfcfb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])) == (ss[1],ss[2],ss[3])]
@@ -354,11 +355,38 @@ for i in combina:
         molpro2.write('! second if LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; }' '\n')
         molpro2.write('' + '\n')
+
+        print ('This is a test for the second if')
+        print ('First bond')
+        print ([str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])])
+        idx2fcfb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])) == (ss[1],ss[2],ss[3])]
+        for i2fcfb in idx2fcfb:
+            print (onebody[i2fcfb])
+
+        print ('Second bond')
+        print ([str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])])
+        idx2fcsb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])) == (ss[1],ss[2],ss[3])]
+        for i2fcsb in idx2fcsb:
+            print (onebody[i2fcsb])
     else:
         #molpro2.write('If third case \n')
         molpro2.write('! third if LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('' + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1;}' '\n')
+
+        print ('This is a test for the third if')
+        print ('First bond')
+        print ([str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])])
+        idx3fcfb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[0][0][0]),str(i[0][0][1]),str(i[0][1])) == (ss[1],ss[2],ss[3])]
+        for i3fcfb in idx3fcfb:
+            print (onebody[i3fcfb])
+
+        print ('Second bond')
+        print ([str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])])
+        idx3fcsb = [zz for zz, ss in enumerate(onebodytwo) if (str(i[1][0][0]),str(i[1][0][1]),str(i[1][1])) == (ss[1],ss[2],ss[3])]
+        for i3fcsb in idx3fcsb:
+            print (onebody[i3fcsb])
+
     # This is added to do the casscf part of the input
     if answer in yes:
         """
