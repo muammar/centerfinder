@@ -67,8 +67,8 @@ Then, for the CASSCF calculation section it will ask you:
 - The wavefunction in the format: `wf,#electrons,Sym,Multiplicity`.
 
 Finally, a `molpro.in` and `molpro2.in` files will be created at the end of the
-execution. Please *note* that you can only run maximum of about `100`
-calculations per input.
+execution. Please *note* that in MOLPRO you can only run maximum of about `100`
+calculations per input file.
 
 ### How to update it?
 
