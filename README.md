@@ -66,7 +66,9 @@ Then, for the CASSCF calculation section it will ask you:
 - Number of OCCUPIED MOs.
 - The wavefunction in the format: `wf,#electrons,Sym,Multiplicity`.
 
-Finally, a `molpro.in` file will be created at the end of the execution.
+Finally, a `molpro.in` and `molpro2.in` files will be created at the end of the
+execution. Please *note* that you can only run maximum of about `100`
+calculations per input.
 
 ### How to update it?
 
