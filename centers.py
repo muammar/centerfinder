@@ -248,8 +248,8 @@ twobody=[]
 for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
     print ('el enumerate dentro ')
     print (idxob, r)
-    # This is statement into the for loop is to avoid doing rotations between
-    # a LMO which is HOMO with itself.
+    # This is  into the for loop is to avoid doing rotations between a LMO
+    # which is HOMO with itself.
     #
     #
     # Uncomment this line for debugging
@@ -275,22 +275,23 @@ for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
         molpro.write('' + '\n')
 
     # This is going to be an index
-    #      iteraction  +   atom1    +    atom 2  +  orbital
+    #      iteraction  +   atom1    +    atom2  +  orbital
     onebody.append([str(idxob),str(r[0][1]),str(r[1][1]),str(r[0][0])])
     twobody.append(([r[0][1], r[1][1]], r[0][0]))
 
 onebodytwo=onebody
 
 
-print ('My built index')
+print ('Index built for one body calculations')
 print (onebody)
 
-print('One body interactions written to file molpro.in')
+print('One body interactions have been written in file molpro.in')
 
 """
 TWO BODY INTERACTIONS
 """
-print ('printing two body mine')
+# This list is taken from the twobody.append()
+print ('Printing two body')
 print (twobody)
 
 print ('')
@@ -298,13 +299,13 @@ print ('')
 print ('printing two body permutations and combinations')
 print ('')
 print ('')
-permuta=list(it.permutations(twobody,2))
+permuta=list(it.permutations(twobody,2)) # Permutations are in place as well.
 combina=list(it.combinations(twobody,2))
 print ('')
 #print (permuta)
 #print (len(permuta))
 
-#print (combina)
+print (combina)
 #print (len(combina))
 
 #print ('')
@@ -411,17 +412,16 @@ for i in combina:
                 + '-'
                 + 'einc__'+str(onebody1if2b[0])+'__'+str(onebody1if2b[1])+'_'+str(onebody1if2b[2])
                 + ';' + '\n')
-
-        molpro2.write('' + '\n')
     else:
         molpro2.write('' + '\n')
 
+
 print('Two body interactions written to file molpro2.in')
-##
-##"""
-##In this part, files are cleaned. If you want to let them, then you can comment
-##all this section.
-##"""
+
+"""
+In this part, files are cleaned. If you want to let them, then you can comment
+all this section.
+"""
 
 import os
 # Files related to the coordinates
