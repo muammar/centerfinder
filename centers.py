@@ -336,7 +336,6 @@ for i in combina:
         #print (i)
         molpro2.write('! first if LMO interactions between bond ' + str(i[0][0]) + ' and bond ' + str(i[1][0]) + '\n')
         molpro2.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(i[0][1]) + '.1,' + str(tnom) + '.1; rotate,'+str(i[1][1]) +'.1,'+ str(tno) +  '.1;}' '\n')
-        molpro2.write('' + '\n')
 
         print ('This is a test for the first if')
         print ('First bond')
@@ -412,6 +411,7 @@ for i in combina:
                 + '-'
                 + 'einc__'+str(onebody1if2b[0])+'__'+str(onebody1if2b[1])+'_'+str(onebody1if2b[2])
                 + ';' + '\n')
+        molpro2.write('' + '\n')
     else:
         molpro2.write('' + '\n')
 
