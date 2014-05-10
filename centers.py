@@ -296,7 +296,6 @@ print (twobody)
 
 print ('')
 print ('')
-print ('printing two body permutations and combinations')
 print ('')
 print ('')
 permuta=list(it.permutations(twobody,2)) # Permutations are in place as well.
@@ -305,9 +304,32 @@ print ('')
 #print (permuta)
 #print (len(permuta))
 
+print ('Printing the two body combinations')
 print (combina)
 #print (len(combina))
 
+print ('There are ' + str(len(combina)) + ' possible combinations')
+
+"""
+This section allows to discard atoms that by symmetry reason their energies are
+equivalent. Please, see the README.md file for more information.
+"""
+
+# List of atoms to be discarded
+
+atdiscard=[1]
+
+offset=0
+
+for  idx,item  in  enumerate(combina):
+    print combina[idx][0][0],  combina[idx][1][0] # Borrar
+    for discad in atdiscard:
+        if atdiscard in combina[idx][0][0] or atdiscard in  combina[idx][1][0]:
+            val=idx
+            print val
+            offset=offset+1
+            print 'offset: '+str(offset)
+            break
 #print ('')
 
 """
