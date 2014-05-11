@@ -315,22 +315,36 @@ This section allows to discard atoms that by symmetry reason their energies are
 equivalent. Please, see the README.md file for more information.
 """
 
-# List of atoms to be discarded
 
-atdiscard=[1]
+atdiscard=[1] # List of atoms to be discarded
 
-offset=0
+combdel=[] # List of items to be deleted from list combina are built from the
+           # loop shown below
 
-for  idx,item  in  enumerate(combina):
-    print combina[idx][0][0],  combina[idx][1][0] # Borrar
+for idx,item in enumerate(combina):
+    print combina[idx][0][0], combina[idx][1][0]
     for discad in atdiscard:
-        if atdiscard in combina[idx][0][0] or atdiscard in  combina[idx][1][0]:
-            val=idx
-            print val
-            offset=offset+1
-            print 'offset: '+str(offset)
-            break
-#print ('')
+        if atdiscard in combina[idx][0][0] or atdiscard in combina[idx][1][0]:
+            idx
+            print idx
+            print 'Elemento prueba mua'
+            print combina[idx]
+            combdel.append(combina[idx])
+            #print ('Elemento eliminado')
+            #print (combina.pop(final))
+
+print ('combdel')
+print combdel
+
+"""
+This is for deleting the atoms declared in atdiscard[]
+"""
+for i in combdel:
+    combina.remove(i)
+print ('New combina')
+
+print combina
+print len(combina)
 
 """
 tno-1 to do rotations
