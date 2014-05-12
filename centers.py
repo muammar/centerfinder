@@ -327,7 +327,7 @@ for idx,item in enumerate(combina):
         if discad in combina[idx][0][0] or discad in combina[idx][1][0]:
             idx
             print idx
-            print 'Elemento prueba mua'
+            print 'Element of the list to be deleted'
             print combina[idx]
             combdel.append(combina[idx])
             break
