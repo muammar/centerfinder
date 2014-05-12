@@ -316,25 +316,27 @@ equivalent. Please, see the README.md file for more information.
 """
 
 
-atdiscard=[1] # List of atoms to be discarded
+atdiscard=[7,8,9,10] # List of atoms to be discarded
 
 combdel=[] # List of items to be deleted from list combina are built from the
-           # loop shown below
+           # loop shown below. Initialization.
 
 for idx,item in enumerate(combina):
     print combina[idx][0][0], combina[idx][1][0]
     for discad in atdiscard:
-        if atdiscard in combina[idx][0][0] or atdiscard in combina[idx][1][0]:
+        if discad in combina[idx][0][0] or discad in combina[idx][1][0]:
             idx
             print idx
             print 'Elemento prueba mua'
             print combina[idx]
             combdel.append(combina[idx])
+            break
             #print ('Elemento eliminado')
             #print (combina.pop(final))
 
 print ('combdel')
 print combdel
+print len(combdel)
 
 """
 This is for deleting the atoms declared in atdiscard[]
