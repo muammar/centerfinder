@@ -316,7 +316,7 @@ equivalent. Please, see the README.md file for more information.
 """
 
 
-atdiscard=[7,8,9,10] # List of atoms to be discarded
+atdiscard=[] # List of atoms to be discarded
 
 combdel=[] # List of items to be deleted from list combina are built from the
            # loop shown below. Initialization.
