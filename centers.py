@@ -317,9 +317,19 @@ equivalent. Please, see the README.md file for more information.
 
 
 atdiscard=[] # List of atoms to be discarded
+combdel=[]   # List of items to be deleted from list combina are built from the
+             # loop shown below. Initialization.
 
-combdel=[] # List of items to be deleted from list combina are built from the
-           # loop shown below. Initialization.
+print ('Would you like to discard atoms by symmetry? [Default answer: no]')
+yes = set(['yes','y', 'ye', 'Yes', 'Ye', 'Y'])
+answer=raw_input()
+if answer in yes:
+    print ('Enter the atoms to be discarded as shown below:')
+    print ('eg. 1,2,3,4')
+    atdiscard = raw_input().split(",")
+    print (atdiscard)
+    atdiscard = map(int, atdiscard) # Convert list of strings to lists of integers
+    print (atdiscard)
 
 for idx,item in enumerate(combina):
     print combina[idx][0][0], combina[idx][1][0]
