@@ -65,6 +65,10 @@ Then, for the CASSCF calculation section it will ask you:
 - Number of FROZEN MOs.
 - Number of OCCUPIED MOs.
 - The wavefunction in the format: `wf,#electrons,Sym,Multiplicity`.
+- Atoms to be discarded by symmetry reasons.
+
+*Note*: The default answers are `NO` so you can just press enter and the
+program will continue.
 
 Finally, a `molpro.in` and `molpro2.in` files will be created at the end of the
 execution. Please *note* that in MOLPRO you can only run maximum of about `100`
