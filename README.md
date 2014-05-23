@@ -101,6 +101,21 @@ a) it calculates the possible combinations; b) it asks you if you want to
 discard atoms to not be taken into account in the two body interaction part; c)
 and finally it writes `molpro2.in`.
 
+### The onebody calculations are wrong, the LMO doesn't match when I plot them
+using a molecular visualizer. What can I do?.
+
+There are 4 parameters you can change in the following lines:
+
+* `atnearat=np.argwhere((distances > 2.3) & (distances < 2.7))`
+* `lmonat=np.argwhere((dcoordcoc > 0.5) & (dcoordcoc < 2.0))`
+
+If you do something wrong, you can revert the changes by doing:
+
+```bash
+$ git checkout $PATH/centerfinder/centers.py
+
+```
+
 ### How to update it?
 
 To update this program, just do a `git pull` in your `$PATH/centerfinder/`
