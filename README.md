@@ -86,6 +86,10 @@ $ split -l 250 molpro2.in
 ```
 and you will split `molpro2.in` in two files containing 250 lines each one.
 
+Please note that you have to check that every MOLPRO block when splitting is
+correctly done. I am thinking in adding another program that let you do this
+instead of using `split`.
+
 ### How do I check that this input file was correctly generated?
 
 I suggest you to make the one body calculations given in `molpro.in` and make
