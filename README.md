@@ -74,6 +74,18 @@ Finally, a `molpro.in` and `molpro2.in` files will be created at the end of the
 execution. Please *note* that in MOLPRO you can only run maximum of about `100`
 calculations per input file.
 
+### The input file created is too long, how can I split it?
+
+If you are using linux, there is a very nice command called `split` (`man
+split` for more information). So, if you have one input file created by
+`centerfinder` that has more than 500 lines and you want to split it in
+2 parts, you can do:
+
+```bash
+$ split -l 250 molpro2.in
+```
+and you will split `molpro2.in` in two files containing 250 lines each one.
+
 ### How to update it?
 
 To update this program, just do a `git pull` in your `$PATH/centerfinder/`
