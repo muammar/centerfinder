@@ -101,8 +101,7 @@ a) it calculates the possible combinations; b) it asks you if you want to
 discard atoms to not be taken into account in the two body interaction part; c)
 and finally it writes `molpro2.in`.
 
-### The onebody calculations are wrong, the LMO doesn't match when I plot them
-using a molecular visualizer. What can I do?.
+### The onebody calculations are wrong, the LMO doesn't match when I plot them using a molecular visualizer. What can I do?.
 
 There are 4 parameters you can change in the following lines:
 
