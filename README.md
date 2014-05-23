@@ -112,7 +112,6 @@ If you do something wrong, you can revert the changes by doing:
 
 ```bash
 $ git checkout $PATH/centerfinder/centers.py
-
 ```
 
 ### How to update it?
