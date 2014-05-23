@@ -96,7 +96,7 @@ I suggest you to make the one body calculations given in `molpro.in` and make
 an analysis of the energies and check if the LMO are well assigned (using any
 of the available molecular visualizers). If after checking your one body
 results you find they are fine, so you are good to go. Actually, the two body
-interactions are built from the one body ones. The script proceed as follows:
+interactions are built from the one body ones. The script proceeds as follows:
 a) it calculates the possible combinations; b) it asks you if you want to
 discard atoms to not be taken into account in the two body interaction part; c)
 and finally it writes `molpro2.in`.
