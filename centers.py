@@ -326,6 +326,7 @@ answer=raw_input()
 if answer in yes:
     print ('Enter the atoms to be discarded as shown below:')
     print ('eg. 1,2,3,4')
+    print ('Note: Only carbon atoms are taken into account')
     atdiscard = raw_input().split(",")
     print (atdiscard)
     atdiscard = map(int, atdiscard) # Convert list of strings to lists of integers
