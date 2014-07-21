@@ -244,6 +244,16 @@ onebody=[] #This array is needed to substract 1 body energies in the two-body in
 twobody=[]
 
 # Below we write the one body interactions in molpro.in
+listica=[]
+print ('Would you like to discard atoms ? [Default answer: no]')
+yes = set(['yes','y', 'ye', 'Yes', 'Ye', 'Y'])
+answer=raw_input()
+if answer in yes:
+    print ('Enter the atoms to be discarded as shown below:')
+    print ('eg. 1,2,3,4')
+    print ('Note: Only carbon atoms are taken into account')
+    listica = raw_input().split(",")
+    print (listica)
 
 for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
     print ('el enumerate dentro ')
@@ -255,29 +265,29 @@ for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
     # Uncomment this line for debugging
     print ([str(r[0][1]), str(r[1][1])], str(r[0][0]), str(tno))
     #
-    #
-    if str(r[0][0]) !=  str(tno):
-        # Uncomment these two lines for debugging
-        # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
-        # print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
-        molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
-        molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1;}' + '\n')
-    else:
-        molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
-        molpro.write('{merge,2104.2; orbital,2103.2; move;}' + '\n')
-        #molpro.write('' + '\n')
-    if answer in yes:
-        molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
-        molpro.write('{ccsd(t); orbital,2105.2; occ,'+ occorb +'; core,' + frozorb + '; ' + wf + ';}' + '\n')
-        molpro.write('einc__' + str(idxob) + '__' + str(r[0][1]) + '_' + str(r[1][1]) + '=energy-ehf;' + '\n')
-        molpro.write('' + '\n')
-    else:
-        molpro.write('' + '\n')
+    if str(r[0][1]) not in listica and str(r[1][1]) not in listica:
+         if str(r[0][0]) !=  str(tno):
+             # Uncomment these two lines for debugging
+             # print ('! Localized MO between Atom ' + str(r[0][1]) + '    and Atom ' + str(r[1][1]))
+             # print ('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1; }')
+             molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
+             molpro.write('{merge,2104.2; orbital,2103.2; move; rotate,' + str(r[0][0]) + '.1,' + str(tno) + '.1;}' + '\n')
+         else:
+             molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
+             molpro.write('{merge,2104.2; orbital,2103.2; move;}' + '\n')
+             #molpro.write('' + '\n')
+         if answer in yes:
+             molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
+             molpro.write('{ccsd(t); orbital,2105.2; occ,'+ occorb +'; core,' + frozorb + '; ' + wf + ';}' + '\n')
+             molpro.write('einc__' + str(idxob) + '__' + str(r[0][1]) + '_' + str(r[1][1]) + '=energy-ehf;' + '\n')
+             molpro.write('' + '\n')
+         else:
+             molpro.write('' + '\n')
 
-    # This is going to be an index
-    #      iteraction  +   atom1    +    atom2  +  orbital
-    onebody.append([str(idxob),str(r[0][1]),str(r[1][1]),str(r[0][0])])
-    twobody.append(([r[0][1], r[1][1]], r[0][0]))
+         # This is going to be an index
+         #      iteraction  +   atom1    +    atom2  +  orbital
+         onebody.append([str(idxob),str(r[0][1]),str(r[1][1]),str(r[0][0])])
+         twobody.append(([r[0][1], r[1][1]], r[0][0]))
 
 onebodytwo=onebody
 
