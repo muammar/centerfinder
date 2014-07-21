@@ -38,8 +38,8 @@ print ('')
 # This is needed for the CASSCF section
 print ('Would you like to build the CASSCF input file? [Default answer: no]')
 yes = set(['yes','y', 'ye', 'Yes', 'Ye', 'Y'])
-answer=raw_input()
-if answer in yes:
+casans=raw_input()
+if casans in yes:
     print ('')
     print ('')
     print ('Now you will be asked about information to build the CASSCF input')
@@ -245,7 +245,7 @@ twobody=[]
 
 # Below we write the one body interactions in molpro.in
 listica=[]
-print ('Would you like to discard atoms ? [Default answer: no]')
+print ('Would you like to discard atoms? [Default answer: no]')
 yes = set(['yes','y', 'ye', 'Yes', 'Ye', 'Y'])
 answer=raw_input()
 if answer in yes:
@@ -276,7 +276,7 @@ for idxob, r in enumerate(it.izip_longest(sumlmonat[::2], sumlmonat[1::2])):
              molpro.write('! Localized MO between Atom ' + str(r[0][1]) + ' and Atom ' + str(r[1][1]) + '\n')
              molpro.write('{merge,2104.2; orbital,2103.2; move;}' + '\n')
              #molpro.write('' + '\n')
-         if answer in yes:
+         if casans in yes:
              molpro.write('{multi; orbital,2104.2; closed,' + corb + '; occ,'+ occorb +'; frozen,' + frozorb +',2104.2;' + wf + '; canorb,2105.2;}' + '\n')
              molpro.write('{ccsd(t); orbital,2105.2; occ,'+ occorb +'; core,' + frozorb + '; ' + wf + ';}' + '\n')
              molpro.write('einc__' + str(idxob) + '__' + str(r[0][1]) + '_' + str(r[1][1]) + '=energy-ehf;' + '\n')
@@ -453,7 +453,7 @@ for i in combina:
             onebody1if2b=onebody[i3fcsb]
 
     # This is added to do the casscf part of the input
-    if answer in yes:
+    if casans in yes:
         """
         corb-1 to do casscf input
         frozorb-1 to do casscf input
